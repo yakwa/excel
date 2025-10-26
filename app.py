@@ -203,6 +203,11 @@ def book_detail(book_id):
     book = BOOKS_DATA[book_id]
     return render_template('book_detail.html', book=book, book_id=book_id, books=BOOKS_DATA)
 
+@app.route('/about')
+def about():
+    """Page à propos"""
+    return render_template('about.html')
+
 @app.route('/contact')
 def contact():
     """Page de contact"""
@@ -267,7 +272,7 @@ def api_order():
                 'book': book['title'],
                 'quantity': quantity,
                 'total': book['price'],
-                'contact_phone': '+228 90 07 40 19'
+                'contact_phone': '+228 90 15 62 76'
             }
         })
     except Exception as e:

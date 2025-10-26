@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}À propos - Le Robinet des Intelligences{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h1 class="display-4 fw-bold mb-4">À propos du Robinet des Intelligences</h1>
+                <p class="lead mb-4">
+                    "Ouvrez le robinet. Laissez couler l'intelligence."
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body p-5">
+                        <h2 class="h3 fw-bold text-primary mb-4">Notre Mission</h2>
+                        <p class="mb-4">
+                            "Robinet des intelligences est né d'un désir : rendre la pensée accessible, fluide et vivante. 
+                            Comme une source qui ne tarit jamais, nous diffusons des idées, des réflexions et des outils 
+                            pour nourrir l'esprit."
+                        </p>
+                        
+                        <h3 class="h4 fw-bold text-primary mb-3">Difficultés d'apprentissage, échec scolaire :</h3>
+                        <h4 class="h5 mb-3">Quelles solutions aux problèmes de son enfant ?</h4>
+                        
+                        <p class="mb-4">
+                            Pour un parent, les chagrins d'école de son enfant sont parfois très lourds à porter. 
+                            Des résultats scolaires décevants, une peur ou une anxiété qui se manifeste dès qu'il 
+                            est question d'apprentissage.
+                        </p>
+                        
+                        <div class="alert alert-warning mb-4">
+                            <ul class="mb-0">
+                                <li>Les mauvaises notes deviennent la norme</li>
+                                <li>Les lacunes s'accumulent</li>
+                                <li>L'enfant commence à détester l'école</li>
+                            </ul>
+                        </div>
+                        
+                        <p class="mb-4">
+                            Comment bien aider son enfant à bien vivre l'école, à sortir de ses difficultés en mettant 
+                            en place une méthode de suivi, d'apprentissage et de révision à la maison pour une scolarité 
+                            épanouissante ?
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Author Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow border-0">
+                    <div class="card-body p-5">
+                        <h2 class="h3 fw-bold text-primary mb-4">Notre Fondateur</h2>
+                        <p class="mb-4">
+                            <strong>Espoir Mawuenyegan Atsou AGOUZE</strong> a pensé vous être utile. Il a élaboré des 
+                            manuels de révision très performants qui répondent efficacement à vos attentes.
+                        </p>
+                        
+                        <h3 class="h4 fw-bold text-primary mb-3">Le Robinet des Intelligences</h3>
+                        <p class="mb-4">
+                            Vous trouverez dans ce manuel des examens complets répartis mensuellement suivant la 
+                            progression du programme d'enseignement en vigueur. Le corrigé y est attaché et permet 
+                            à l'élève de vérifier le résultat, seul ou accompagné d'un adulte.
+                        </p>
+                        
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-3"></i>
+                                    <span>Examens complets mensuels</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-3"></i>
+                                    <span>Corrigés détaillés</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-3"></i>
+                                    <span>Suivi de progression</span>
+                                </div>
+                                <div class="d-flex align-items-center mb-3">
+                                    <i class="fas fa-check-circle text-success me-3"></i>
+                                    <span>Méthode éprouvée</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="h3 fw-bold mb-4">Prêt à ouvrir le robinet de l'intelligence ?</h2>
+                <p class="mb-4">
+                    Découvrez nos manuels de révision et aidez votre enfant à réussir sa scolarité.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <a href="{{ url_for('catalogue') }}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-book me-2"></i>Voir le Catalogue
+                    </a>
+                    <a href="tel:+22890156276" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-phone me-2"></i>+228 90 15 62 76
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

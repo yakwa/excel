@@ -24,7 +24,7 @@ class Config:
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     
     # Informations de contact
-    CONTACT_PHONE_1 = '+228 90 07 40 19'
+    CONTACT_PHONE_1 = '+228 90 15 62 76'
     CONTACT_EMAIL = 'contact@robinet-intelligences.com'
     CONTACT_ADDRESS = 'Lomé, Togo'
     
