@@ -1,0 +1,367 @@
+{% extends "base.html" %}
+
+{% block title %}Commander {{ book.title }} - Le Robinet des Intelligences{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<section class="py-3 bg-light">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('index') }}" class="text-decoration-none">Accueil</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('catalogue') }}" class="text-decoration-none">Catalogue</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('book_detail', book_id=book_id) }}" class="text-decoration-none">{{ book.title }}</a>
+                </li>
+                <li class="breadcrumb-item active">Commander</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Order Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Order Summary -->
+            <div class="col-lg-4 order-lg-2">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-shopping-cart me-2"></i>
+                            Résumé de la Commande
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <img src="{{ url_for('serve_image', filename=book.image) }}" 
+                                 class="img-thumbnail me-3" style="width: 80px; height: 80px; object-fit: cover;" 
+                                 alt="{{ book.title }}">
+                            <div>
+                                <h6 class="fw-bold mb-1">{{ book.title }}</h6>
+                                <small class="text-muted">{{ book.class }}</small>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Prix unitaire :</span>
+                            <span class="fw-bold">{{ book.price }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Quantité :</span>
+                            <span class="fw-bold" id="summary-quantity">1</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Livraison :</span>
+                            <span class="text-success fw-bold">Gratuite</span>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="d-flex justify-content-between">
+                            <span class="fw-bold">Total :</span>
+                            <span class="fw-bold text-primary h5" id="total-price">{{ book.price }}</span>
+                        </div>
+                        
+                        <div class="mt-3 p-3 bg-light rounded">
+                            <h6 class="fw-bold mb-2">
+                                <i class="fas fa-truck text-success me-2"></i>
+                                Livraison Gratuite
+                            </h6>
+                            <small class="text-muted">
+                                Livraison gratuite dans la région d'Agoué sous 24h
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="card mt-4">
+                    <div class="card-body text-center">
+                        <h6 class="fw-bold mb-3">Besoin d'Aide ?</h6>
+                        <a href="tel:+22890074019" class="btn btn-outline-primary btn-sm me-2">
+                            <i class="fas fa-phone me-1"></i>Appeler
+                        </a>
+                        <a href="{{ url_for('contact') }}" class="btn btn-outline-secondary btn-sm">
+                            <i class="fas fa-envelope me-1"></i>Contact
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Form -->
+            <div class="col-lg-8 order-lg-1">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="mb-0">
+                            <i class="fas fa-user me-2"></i>
+                            Informations de Commande
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <form id="orderForm">
+                            <input type="hidden" name="book_id" value="{{ book_id }}">
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label">Prénom *</label>
+                                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label">Nom *</label>
+                                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Téléphone *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" 
+                                           placeholder="+229 XX XX XX XX" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email">
+                                </div>
+                                <div class="col-12">
+                                    <label for="address" class="form-label">Adresse de Livraison *</label>
+                                    <textarea class="form-control" id="address" name="address" rows="3" 
+                                              placeholder="Adresse complète avec quartier et points de repère" required></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="city" class="form-label">Ville *</label>
+                                    <input type="text" class="form-control" id="city" name="city" value="Agoué" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="quantity" class="form-label">Quantité *</label>
+                                    <select class="form-select" id="quantity" name="quantity" required>
+                                        <option value="1">1 exemplaire</option>
+                                        <option value="2">2 exemplaires</option>
+                                        <option value="3">3 exemplaires</option>
+                                        <option value="4">4 exemplaires</option>
+                                        <option value="5">5 exemplaires</option>
+                                        <option value="more">Plus de 5 (nous contacter)</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="paymentMethod" class="form-label">Mode de Paiement *</label>
+                                    <div class="row g-2">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="paymentMethod" 
+                                                       id="cash" value="cash" checked>
+                                                <label class="form-check-label" for="cash">
+                                                    <i class="fas fa-money-bill-wave me-2"></i>
+                                                    Espèces
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="paymentMethod" 
+                                                       id="momo" value="mobile_money">
+                                                <label class="form-check-label" for="momo">
+                                                    <i class="fas fa-mobile-alt me-2"></i>
+                                                    Mobile Money
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="paymentMethod" 
+                                                       id="bank" value="bank_transfer">
+                                                <label class="form-check-label" for="bank">
+                                                    <i class="fas fa-university me-2"></i>
+                                                    Virement
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="notes" class="form-label">Notes Spéciales</label>
+                                    <textarea class="form-control" id="notes" name="notes" rows="3" 
+                                              placeholder="Instructions spéciales pour la livraison ou autres remarques..."></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="terms" required>
+                                        <label class="form-check-label" for="terms">
+                                            J'accepte les <a href="#" class="text-decoration-none">conditions de vente</a> 
+                                            et confirme que les informations fournies sont exactes *
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="newsletter">
+                                        <label class="form-check-label" for="newsletter">
+                                            Je souhaite recevoir des informations sur les nouvelles annales
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <hr class="my-4">
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="{{ url_for('book_detail', book_id=book_id) }}" 
+                                   class="btn btn-outline-secondary btn-lg">
+                                    <i class="fas fa-arrow-left me-2"></i>Retour
+                                </a>
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    <i class="fas fa-check me-2"></i>
+                                    <span class="btn-text">Confirmer la Commande</span>
+                                    <span class="loading d-none"></span>
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <div id="form-messages" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Security Info -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row g-4 text-center">
+            <div class="col-md-4">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="fas fa-shield-alt text-success me-2 fs-4"></i>
+                    <div>
+                        <h6 class="fw-bold mb-0">Commande Sécurisée</h6>
+                        <small class="text-muted">Vos données sont protégées</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="fas fa-truck text-primary me-2 fs-4"></i>
+                    <div>
+                        <h6 class="fw-bold mb-0">Livraison Rapide</h6>
+                        <small class="text-muted">24h dans Agoué</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="d-flex align-items-center justify-content-center">
+                    <i class="fas fa-headset text-warning me-2 fs-4"></i>
+                    <div>
+                        <h6 class="fw-bold mb-0">Support Client</h6>
+                        <small class="text-muted">Assistance 7j/7</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const orderForm = document.getElementById('orderForm');
+    const formMessages = document.getElementById('form-messages');
+    const submitBtn = orderForm.querySelector('button[type="submit"]');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const loading = submitBtn.querySelector('.loading');
+    const quantitySelect = document.getElementById('quantity');
+    const summaryQuantity = document.getElementById('summary-quantity');
+    const totalPrice = document.getElementById('total-price');
+    
+    // Price calculation
+    const basePrice = parseInt('{{ book.price.replace(" FCFA", "") }}');
+    
+    quantitySelect.addEventListener('change', function() {
+        const quantity = parseInt(this.value) || 1;
+        if (this.value === 'more') {
+            summaryQuantity.textContent = '5+';
+            totalPrice.textContent = 'Nous contacter';
+        } else {
+            summaryQuantity.textContent = quantity;
+            const total = basePrice * quantity;
+            totalPrice.textContent = total + ' FCFA';
+        }
+    });
+    
+    // Form submission
+    orderForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.classList.add('d-none');
+        loading.classList.remove('d-none');
+        
+        // Clear previous messages
+        formMessages.innerHTML = '';
+        
+        // Get form data
+        const formData = new FormData(orderForm);
+        const data = {
+            book_id: formData.get('book_id'),
+            name: formData.get('firstName') + ' ' + formData.get('lastName'),
+            phone: formData.get('phone'),
+            email: formData.get('email'),
+            address: formData.get('address'),
+            city: formData.get('city'),
+            quantity: formData.get('quantity'),
+            paymentMethod: formData.get('paymentMethod'),
+            notes: formData.get('notes')
+        };
+        
+        try {
+            const response = await fetch('/api/order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                formMessages.innerHTML = `
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Commande confirmée !</strong><br>
+                        ${result.message}
+                    </div>
+                `;
+                orderForm.reset();
+                
+                // Scroll to success message
+                formMessages.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                formMessages.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i>
+                        ${result.message}
+                    </div>
+                `;
+            }
+        } catch (error) {
+            formMessages.innerHTML = `
+                <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    Une erreur est survenue. Veuillez réessayer ou nous appeler au +228 90 07 40 19.
+                </div>
+            `;
+        } finally {
+            // Hide loading state
+            submitBtn.disabled = false;
+            btnText.classList.remove('d-none');
+            loading.classList.add('d-none');
+        }
+    });
+});
+</script>
+{% endblock %}

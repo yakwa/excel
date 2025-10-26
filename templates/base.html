@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Le Robinet des Intelligences{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <!-- Navigation Futuriste CSS -->
+    <style>
+        /* Navigation Futuriste Professionnelle */
+        .navbar-futuristic {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.95) 0%, rgba(52, 73, 94, 0.95) 100%) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(201, 170, 113, 0.3);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+        
+        .navbar-futuristic.scrolled {
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.98) 0%, rgba(52, 73, 94, 0.98) 100%) !important;
+            box-shadow: 0 2px 30px rgba(0, 0, 0, 0.2);
+            padding: 10px 0;
+        }
+        
+        .navbar-brand-futuristic {
+            font-weight: 700 !important;
+            font-size: 1.4rem !important;
+            color: #c9aa71 !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .navbar-brand-futuristic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(201, 170, 113, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .navbar-brand-futuristic:hover::before {
+            left: 100%;
+        }
+        
+        .navbar-brand-futuristic:hover {
+            color: #ffffff !important;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link-futuristic {
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500 !important;
+            padding: 10px 18px !important;
+            margin: 0 3px !important;
+            border-radius: 25px !important;
+            transition: all 0.3s ease !important;
+            position: relative !important;
+            overflow: hidden !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+        
+        .nav-link-futuristic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(201, 170, 113, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .nav-link-futuristic:hover::before {
+            transform: translateX(0);
+        }
+        
+        .nav-link-futuristic:hover {
+            color: #c9aa71 !important;
+            background: rgba(201, 170, 113, 0.1) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(201, 170, 113, 0.2);
+        }
+        
+        .nav-link-futuristic.active {
+            color: #c9aa71 !important;
+            background: rgba(201, 170, 113, 0.15) !important;
+            box-shadow: 0 3px 10px rgba(201, 170, 113, 0.3);
+        }
+        
+        .btn-call-futuristic {
+            background: linear-gradient(45deg, #c9aa71, #b8860b) !important;
+            border: none !important;
+            color: white !important;
+            font-weight: 600 !important;
+            padding: 10px 20px !important;
+            border-radius: 25px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 3px 15px rgba(201, 170, 113, 0.3) !important;
+            position: relative !important;
+            overflow: hidden !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-decoration: none !important;
+            margin-left: 8px !important;
+        }
+        
+        .btn-call-futuristic::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-call-futuristic:hover::before {
+            left: 100%;
+        }
+        
+        .btn-call-futuristic:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 5px 25px rgba(201, 170, 113, 0.4) !important;
+            color: white !important;
+        }
+        
+        .navbar-toggler-futuristic {
+            border: 1px solid #c9aa71 !important;
+            padding: 6px 10px !important;
+            border-radius: 8px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .navbar-toggler-futuristic:hover {
+            background: rgba(201, 170, 113, 0.1) !important;
+            transform: scale(1.05);
+        }
+        
+        .navbar-toggler-futuristic .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28201, 170, 113, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+        }
+        
+        /* Animation au scroll */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .navbar-futuristic {
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        /* Navbar alignment fix */
+        .navbar-nav {
+            align-items: center !important;
+        }
+        
+        .navbar-nav .nav-item {
+            display: flex !important;
+            align-items: center !important;
+        }
+        
+        /* Responsive Navigation */
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: linear-gradient(135deg, rgba(44, 62, 80, 0.98) 0%, rgba(52, 73, 94, 0.98) 100%);
+                border-radius: 15px;
+                margin-top: 10px;
+                padding: 20px;
+                border: 1px solid rgba(201, 170, 113, 0.2);
+            }
+            
+            .nav-link-futuristic {
+                margin: 8px 0 !important;
+                text-align: center !important;
+                justify-content: center !important;
+            }
+            
+            .btn-call-futuristic {
+                margin: 10px 0 0 0 !important;
+                width: 100% !important;
+                justify-content: center !important;
+            }
+            
+            .navbar-nav .nav-item {
+                width: 100% !important;
+            }
+        }
+        
+        /* Footer Responsive */
+        @media (max-width: 768px) {
+            footer {
+                padding: 60px 0 30px !important;
+            }
+            
+            footer .col-lg-4,
+            footer .col-lg-2,
+            footer .col-lg-3 {
+                margin-bottom: 40px !important;
+                text-align: center !important;
+            }
+            
+            footer .col-lg-4 > div {
+                padding: 25px 20px !important;
+            }
+            
+            footer .col-lg-3 > div {
+                padding: 20px 15px !important;
+            }
+            
+            footer h5,
+            footer h6 {
+                font-size: 1.2rem !important;
+                margin-bottom: 15px !important;
+            }
+            
+            footer .d-flex.gap-3 {
+                justify-content: center !important;
+                gap: 20px !important;
+            }
+            
+            footer ul {
+                text-align: center !important;
+            }
+            
+            footer .row.align-items-center {
+                text-align: center !important;
+            }
+            
+            footer .col-md-6.text-md-end {
+                text-align: center !important;
+                margin-top: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            footer {
+                padding: 50px 0 25px !important;
+            }
+            
+            footer .container {
+                padding: 0 15px !important;
+            }
+            
+            footer .col-lg-4 > div,
+            footer .col-lg-3 > div {
+                margin: 0 10px !important;
+                padding: 20px 15px !important;
+            }
+            
+            footer h5 {
+                font-size: 1.1rem !important;
+            }
+            
+            footer h6 {
+                font-size: 1rem !important;
+            }
+            
+            footer p,
+            footer li {
+                font-size: 0.9rem !important;
+            }
+            
+            footer .d-flex.gap-3 a {
+                font-size: 1.2rem !important;
+            }
+        }
+        
+        /* Global Responsive Optimizations */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px !important;
+            }
+            
+            .container {
+                max-width: 100% !important;
+                padding: 0 15px !important;
+            }
+            
+            h1, .h1 {
+                font-size: 2rem !important;
+            }
+            
+            h2, .h2 {
+                font-size: 1.75rem !important;
+            }
+            
+            h3, .h3 {
+                font-size: 1.5rem !important;
+            }
+            
+            h4, .h4 {
+                font-size: 1.25rem !important;
+            }
+            
+            h5, .h5 {
+                font-size: 1.1rem !important;
+            }
+            
+            .btn {
+                font-size: 0.9rem !important;
+                padding: 8px 16px !important;
+            }
+            
+            .card {
+                border-radius: 12px !important;
+            }
+            
+            .rounded {
+                border-radius: 8px !important;
+            }
+            
+            .shadow {
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            body {
+                font-size: 13px !important;
+            }
+            
+            .container-fluid {
+                padding: 0 10px !important;
+            }
+            
+            .row {
+                margin: 0 -10px !important;
+            }
+            
+            .col, [class*="col-"] {
+                padding: 0 10px !important;
+            }
+            
+            .mb-3 {
+                margin-bottom: 1rem !important;
+            }
+            
+            .mb-4 {
+                margin-bottom: 1.5rem !important;
+            }
+            
+            .mb-5 {
+                margin-bottom: 2rem !important;
+            }
+            
+            .mt-3 {
+                margin-top: 1rem !important;
+            }
+            
+            .mt-4 {
+                margin-top: 1.5rem !important;
+            }
+            
+            .mt-5 {
+                margin-top: 2rem !important;
+            }
+            
+            .p-3 {
+                padding: 1rem !important;
+            }
+            
+            .p-4 {
+                padding: 1.5rem !important;
+            }
+            
+            .p-5 {
+                padding: 2rem !important;
+            }
+        }
+        
+        /* Touch-friendly interactions */
+        @media (max-width: 768px) {
+            a, button, .btn {
+                min-height: 44px !important;
+                min-width: 44px !important;
+            }
+            
+            .nav-link {
+                padding: 12px 16px !important;
+            }
+            
+            .form-control, .form-select {
+                min-height: 44px !important;
+            }
+            
+            .card-body {
+                padding: 1.25rem !important;
+            }
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation Futuriste -->
+    <nav class="navbar navbar-expand-lg navbar-futuristic fixed-top" id="mainNavbar">
+        <div class="container">
+            <a class="navbar-brand-futuristic" href="{{ url_for('index') }}">
+                <i class="fas fa-graduation-cap me-2"></i>
+                Le Robinet des Intelligences
+            </a>
+            
+            <button class="navbar-toggler navbar-toggler-futuristic" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-futuristic" href="{{ url_for('index') }}">
+                            <i class="fas fa-home me-1"></i>Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-futuristic" href="{{ url_for('catalogue') }}">
+                            <i class="fas fa-book me-1"></i>Catalogue
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-futuristic" href="{{ url_for('contact') }}">
+                            <i class="fas fa-envelope me-1"></i>Contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn-call-futuristic ms-2" href="tel:+22890074019">
+                            <i class="fas fa-phone me-1"></i>Appeler
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer Professional -->
+    <footer style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; padding: 80px 0 40px; position: relative; overflow: hidden;">
+        <!-- Professional Background Pattern -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(201,170,113,0.05) 35px, rgba(201,170,113,0.05) 70px); opacity: 0.4;"></div>
+        
+        <div class="container" style="position: relative; z-index: 2;">
+            <div class="row g-4">
+                <div class="col-lg-4 mb-4">
+                    <div style="background: linear-gradient(135deg, #34495e, #2c3e50); padding: 30px; border-radius: 15px; border: 1px solid #c9aa71; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; background: radial-gradient(circle, rgba(201,170,113,0.1) 0%, transparent 70%);"></div>
+                        <h5 style="font-weight: 700; margin-bottom: 20px; color: #c9aa71; font-size: 1.4rem;">
+                            <i class="fas fa-graduation-cap me-2"></i>
+                            Le Robinet des Intelligences
+                        </h5>
+                        <p style="color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 25px; font-size: 0.95rem;">
+                            Votre partenaire de confiance pour l'excellence académique. Qualité premium • Résultats garantis.
+                        </p>
+                        <div class="d-flex gap-3">
+                            <a href="#" style="color: #c9aa71; font-size: 1.3rem; transition: all 0.3s ease; text-decoration: none;" onmouseover="this.style.transform='scale(1.1)'; this.style.color='#ffffff'" onmouseout="this.style.transform='scale(1)'; this.style.color='#c9aa71'"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" style="color: #c9aa71; font-size: 1.3rem; transition: all 0.3s ease; text-decoration: none;" onmouseover="this.style.transform='scale(1.1)'; this.style.color='#ffffff'" onmouseout="this.style.transform='scale(1)'; this.style.color='#c9aa71'"><i class="fab fa-twitter"></i></a>
+                            <a href="#" style="color: #c9aa71; font-size: 1.3rem; transition: all 0.3s ease; text-decoration: none;" onmouseover="this.style.transform='scale(1.1)'; this.style.color='#ffffff'" onmouseout="this.style.transform='scale(1)'; this.style.color='#c9aa71'"><i class="fab fa-instagram"></i></a>
+                            <a href="#" style="color: #c9aa71; font-size: 1.3rem; transition: all 0.3s ease; text-decoration: none;" onmouseover="this.style.transform='scale(1.1)'; this.style.color='#ffffff'" onmouseout="this.style.transform='scale(1)'; this.style.color='#c9aa71'"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 mb-4">
+                    <h6 style="font-weight: 700; margin-bottom: 20px; color: #c9aa71; font-size: 1.1rem;">Navigation</h6>
+                    <ul class="list-unstyled">
+                        <li style="margin-bottom: 10px;"><a href="{{ url_for('index') }}" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#c9aa71'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Accueil</a></li>
+                        <li style="margin-bottom: 10px;"><a href="{{ url_for('catalogue') }}" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#c9aa71'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Catalogue</a></li>
+                        <li style="margin-bottom: 10px;"><a href="{{ url_for('contact') }}" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#c9aa71'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 mb-4">
+                    <h6 style="font-weight: 700; margin-bottom: 20px; color: #c9aa71; font-size: 1.1rem;">Matières Premium</h6>
+                    <ul class="list-unstyled">
+                        <li style="margin-bottom: 10px;"><a href="{{ url_for('book_detail', book_id='maths') }}" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#c9aa71'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Mathématiques</a></li>
+                        <li style="margin-bottom: 10px;"><a href="{{ url_for('book_detail', book_id='svt') }}" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#c9aa71'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">SVT</a></li>
+                        <li style="margin-bottom: 10px;"><a href="{{ url_for('book_detail', book_id='philosophie') }}" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#c9aa71'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Philosophie</a></li>
+                        <li style="margin-bottom: 10px;"><a href="{{ url_for('book_detail', book_id='francais') }}" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#c9aa71'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Français</a></li>
+                        <li style="margin-bottom: 10px;"><a href="{{ url_for('book_detail', book_id='anglais') }}" style="color: rgba(255,255,255,0.7); text-decoration: none; transition: all 0.3s ease;" onmouseover="this.style.color='#c9aa71'" onmouseout="this.style.color='rgba(255,255,255,0.7)'">Anglais</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-lg-3 mb-4">
+                    <div style="background: linear-gradient(135deg, #34495e, #2c3e50); padding: 25px; border-radius: 12px; border: 1px solid #c9aa71;">
+                        <h6 style="font-weight: 700; margin-bottom: 20px; color: #c9aa71; font-size: 1.1rem;">Contact Direct</h6>
+                        <ul class="list-unstyled">
+                            <li style="margin-bottom: 15px; color: rgba(255,255,255,0.8);"><i class="fas fa-phone me-3" style="color: #c9aa71;"></i>+228 90 07 40 19</li>
+                            <li style="margin-bottom: 15px; color: rgba(255,255,255,0.8);"><i class="fas fa-map-marker-alt me-3" style="color: #c9aa71;"></i>Lomé, Togo</li>
+                            <li style="color: rgba(255,255,255,0.8);"><i class="fas fa-clock me-3" style="color: #c9aa71;"></i>24/7 Support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <hr style="border-color: #c9aa71; margin: 50px 0 30px; opacity: 0.3;">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p style="margin-bottom: 0; color: rgba(255,255,255,0.6); font-size: 1rem;">
+                        &copy; 2024 Le Robinet des Intelligences. Tous droits réservés.
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p style="margin-bottom: 0; color: rgba(255,255,255,0.6); font-size: 1rem;">
+                        Conçu avec <i class="fas fa-heart" style="color: #c9aa71;"></i> pour votre réussite
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Navigation Futuriste JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navbar = document.getElementById('mainNavbar');
+            const navLinks = document.querySelectorAll('.nav-link-futuristic');
+            
+            // Effet de scroll sur la navbar
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Gestion de la page active
+            const currentPath = window.location.pathname;
+            navLinks.forEach(link => {
+                const linkPath = new URL(link.href).pathname;
+                if (linkPath === currentPath || (currentPath === '/' && linkPath === '/')) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Fermeture automatique du menu mobile
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    const navbarCollapse = document.getElementById('navbarNav');
+                    if (navbarCollapse.classList.contains('show')) {
+                        const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                        bsCollapse.hide();
+                    }
+                });
+            });
+            
+            // Effet de particules sur le logo (optionnel)
+            const brand = document.querySelector('.navbar-brand-futuristic');
+            brand.addEventListener('mouseenter', function() {
+                this.style.textShadow = '0 0 20px rgba(201, 170, 113, 0.5)';
+            });
+            
+            brand.addEventListener('mouseleave', function() {
+                this.style.textShadow = 'none';
+            });
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

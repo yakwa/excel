@@ -1,0 +1,314 @@
+{% extends "base.html" %}
+
+{% block title %}Catalogue - Le Robinet des Intelligences{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Responsive Catalogue */
+    @media (max-width: 768px) {
+        .display-4 {
+            font-size: 2.5rem !important;
+        }
+        
+        .lead {
+            font-size: 1.1rem !important;
+        }
+        
+        .filter-btn {
+            font-size: 0.85rem !important;
+            padding: 6px 12px !important;
+            margin: 3px !important;
+        }
+        
+        .book-card {
+            margin-bottom: 30px !important;
+        }
+        
+        .card-img-top {
+            height: 250px !important;
+            object-fit: cover !important;
+        }
+        
+        .price-tag {
+            font-size: 1rem !important;
+            padding: 6px 12px !important;
+        }
+        
+        .feature-list {
+            font-size: 0.9rem !important;
+        }
+        
+        .btn {
+            font-size: 0.9rem !important;
+            padding: 8px 16px !important;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem !important;
+            margin-bottom: 20px !important;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .py-5 {
+            padding: 3rem 0 !important;
+        }
+        
+        .py-4 {
+            padding: 2rem 0 !important;
+        }
+        
+        .display-4 {
+            font-size: 2rem !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .d-flex.justify-content-md-end {
+            justify-content: center !important;
+            flex-wrap: wrap !important;
+        }
+        
+        .filter-btn {
+            font-size: 0.8rem !important;
+            padding: 5px 10px !important;
+            margin: 2px !important;
+            flex: 1 1 auto !important;
+            min-width: 80px !important;
+        }
+        
+        .card-body {
+            padding: 1rem !important;
+        }
+        
+        .card-title {
+            font-size: 1.1rem !important;
+        }
+        
+        .card-text {
+            font-size: 0.85rem !important;
+        }
+        
+        .btn-lg {
+            font-size: 1rem !important;
+            padding: 10px 20px !important;
+        }
+        
+        .container {
+            padding: 0 15px !important;
+        }
+    }
+    
+    @media (min-width: 577px) and (max-width: 768px) {
+        .filter-btn {
+            flex: 0 1 auto !important;
+        }
+        
+        .col-lg-4.col-md-6 {
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-3">Notre Catalogue</h1>
+                <p class="lead text-muted">
+                    Découvrez notre collection complète d'annales pour les classes de Terminale
+                </p>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb justify-content-center">
+                        <li class="breadcrumb-item">
+                            <a href="{{ url_for('index') }}" class="text-decoration-none">Accueil</a>
+                        </li>
+                        <li class="breadcrumb-item active">Catalogue</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="py-4 bg-white border-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h5 class="mb-0">{{ books|length }} annales disponibles</h5>
+            </div>
+            <div class="col-md-6">
+                <div class="d-flex justify-content-md-end gap-2 flex-wrap">
+                    <button class="btn btn-outline-primary filter-btn active" data-filter="all">
+                        <i class="fas fa-th me-1"></i>Toutes
+                    </button>
+                    <button class="btn btn-outline-primary filter-btn" data-filter="sciences">
+                        <i class="fas fa-flask me-1"></i>Sciences
+                    </button>
+                    <button class="btn btn-outline-primary filter-btn" data-filter="litteraire">
+                        <i class="fas fa-book-open me-1"></i>Littéraire
+                    </button>
+                    <button class="btn btn-outline-primary filter-btn" data-filter="langues">
+                        <i class="fas fa-language me-1"></i>Langues
+                    </button>
+                    <button class="btn btn-outline-primary filter-btn" data-filter="autres">
+                        <i class="fas fa-graduation-cap me-1"></i>Autres
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Books Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4" id="books-grid">
+            {% for book_id, book in books.items() %}
+            <div class="col-lg-4 col-md-6 book-item" 
+                 data-category="{% if book_id in ['maths', 'svt', 'physique_chimie', 'maths_complementaires'] %}sciences{% elif book_id in ['francais', 'philosophie', 'histoire_geo'] %}litteraire{% elif book_id in ['anglais', 'espagnol', 'allemand'] %}langues{% else %}autres{% endif %}">
+                <div class="card h-100 book-card">
+                    <div class="position-relative">
+                        <img src="{{ url_for('serve_image', filename=book.image) }}" 
+                             class="card-img-top" alt="{{ book.title }}">
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-primary">Nouveau Programme</span>
+                        </div>
+                        <div class="position-absolute bottom-0 start-0 m-3">
+                            <span class="price-tag">{{ book.price }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-2">
+                            <small class="text-muted">{{ book.class }}</small>
+                        </div>
+                        <h5 class="card-title">{{ book.title }}</h5>
+                        <p class="card-text text-muted">{{ book.subtitle }}</p>
+                        <p class="card-text">{{ book.description }}</p>
+                        
+                        <!-- Features List -->
+                        <ul class="feature-list mb-3">
+                            {% for feature in book.features %}
+                            <li><i class="fas fa-check text-success"></i> {{ feature }}</li>
+                            {% endfor %}
+                        </ul>
+                        
+                        <div class="mt-auto">
+                            <div class="d-grid gap-2">
+                                <a href="{{ url_for('book_detail', book_id=book_id) }}" 
+                                   class="btn btn-outline-primary">
+                                    <i class="fas fa-eye me-2"></i>Voir Détails
+                                </a>
+                                <a href="{{ url_for('order', book_id=book_id) }}" 
+                                   class="btn btn-success">
+                                    <i class="fas fa-shopping-cart me-2"></i>Commander Maintenant
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Info Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h5 class="fw-bold">Livraison Gratuite</h5>
+                    <p class="text-muted mb-0">
+                        Livraison gratuite pour toute commande dans la région d'Agoué
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h5 class="fw-bold">Support 24/7</h5>
+                    <p class="text-muted mb-0">
+                        Notre équipe est disponible pour répondre à toutes vos questions
+                    </p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h5 class="fw-bold">Qualité Garantie</h5>
+                    <p class="text-muted mb-0">
+                        Contenu vérifié et approuvé par des enseignants expérimentés
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="fw-bold mb-2">Besoin d'Aide pour Choisir ?</h3>
+                <p class="mb-0">
+                    Contactez-nous pour des conseils personnalisés sur le choix de vos annales.
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('contact') }}" class="btn btn-warning btn-lg me-2">
+                    <i class="fas fa-envelope me-2"></i>Contactez-nous
+                </a>
+                <a href="tel:+22990156276" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-phone me-2"></i>Appelez
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const bookItems = document.querySelectorAll('.book-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            const filter = this.getAttribute('data-filter');
+            
+            bookItems.forEach(item => {
+                if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    item.style.display = 'block';
+                    item.classList.add('fade-in-up');
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

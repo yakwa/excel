@@ -1,0 +1,356 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} - Le Robinet des Intelligences{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Responsive Book Detail */
+    @media (max-width: 768px) {
+        .book-detail-img {
+            max-width: 100% !important;
+            height: auto !important;
+            margin-bottom: 30px !important;
+        }
+        
+        .display-5 {
+            font-size: 2rem !important;
+        }
+        
+        .h4 {
+            font-size: 1.3rem !important;
+        }
+        
+        .lead {
+            font-size: 1.1rem !important;
+        }
+        
+        .h2 {
+            font-size: 1.8rem !important;
+        }
+        
+        .btn-lg {
+            font-size: 1rem !important;
+            padding: 12px 24px !important;
+        }
+        
+        .d-grid.gap-2.d-md-flex > * {
+            margin-bottom: 10px !important;
+        }
+        
+        .feature-list li {
+            font-size: 0.9rem !important;
+            margin-bottom: 8px !important;
+        }
+        
+        .bg-light.rounded {
+            padding: 20px !important;
+            margin-top: 30px !important;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .py-5 {
+            padding: 3rem 0 !important;
+        }
+        
+        .py-3 {
+            padding: 1.5rem 0 !important;
+        }
+        
+        .display-5 {
+            font-size: 1.8rem !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .h4 {
+            font-size: 1.2rem !important;
+        }
+        
+        .lead {
+            font-size: 1rem !important;
+        }
+        
+        .btn-lg {
+            font-size: 0.95rem !important;
+            padding: 10px 20px !important;
+        }
+        
+        .d-grid.gap-2.d-md-flex {
+            gap: 0.5rem !important;
+        }
+        
+        .d-grid.gap-2.d-md-flex > * {
+            flex: 1 !important;
+        }
+        
+        .badge {
+            font-size: 0.8rem !important;
+            padding: 6px 12px !important;
+        }
+        
+        .card-body {
+            padding: 1.5rem !important;
+        }
+        
+        .rounded-circle.p-3 {
+            padding: 1.5rem !important;
+        }
+        
+        .container {
+            padding: 0 15px !important;
+        }
+        
+        .g-5 {
+            --bs-gutter-x: 1rem !important;
+            --bs-gutter-y: 2rem !important;
+        }
+        
+        .g-4 {
+            --bs-gutter-x: 1rem !important;
+            --bs-gutter-y: 1.5rem !important;
+        }
+    }
+    
+    @media (min-width: 577px) and (max-width: 992px) {
+        .col-lg-6 {
+            margin-bottom: 30px !important;
+        }
+        
+        .book-detail-img {
+            max-width: 80% !important;
+            margin: 0 auto !important;
+            display: block !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<section class="py-3 bg-light">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('index') }}" class="text-decoration-none">Accueil</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ url_for('catalogue') }}" class="text-decoration-none">Catalogue</a>
+                </li>
+                <li class="breadcrumb-item active">{{ book.title }}</li>
+            </ol>
+        </nav>
+    </div>
+</section>
+
+<!-- Book Detail -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Book Image -->
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <img src="{{ url_for('serve_image', filename=book.image) }}" 
+                         class="img-fluid book-detail-img" alt="{{ book.title }}">
+                </div>
+            </div>
+            
+            <!-- Book Info -->
+            <div class="col-lg-6">
+                <div class="mb-3">
+                    <span class="badge bg-primary mb-2">{{ book.class }}</span>
+                    <span class="badge bg-success mb-2 ms-2">Nouveau Programme</span>
+                </div>
+                
+                <h1 class="display-5 fw-bold mb-3">{{ book.title }}</h1>
+                <h2 class="h4 text-muted mb-4">{{ book.subtitle }}</h2>
+                
+                <p class="lead mb-4">{{ book.description }}</p>
+                
+                <!-- Price -->
+                <div class="mb-4">
+                    <span class="h2 text-primary fw-bold">{{ book.price }}</span>
+                    <small class="text-muted ms-2">Prix unitaire</small>
+                </div>
+                
+                <!-- Features -->
+                <div class="mb-4">
+                    <h5 class="fw-bold mb-3">Ce que vous obtenez :</h5>
+                    <ul class="feature-list">
+                        {% for feature in book.features %}
+                        <li><i class="fas fa-check text-success"></i> {{ feature }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="d-grid gap-2 d-md-flex">
+                    <a href="{{ url_for('order', book_id=book_id) }}" 
+                       class="btn btn-success btn-lg flex-fill">
+                        <i class="fas fa-shopping-cart me-2"></i>Commander Maintenant
+                    </a>
+                    <a href="tel:+22890074019" 
+                       class="btn btn-outline-primary btn-lg flex-fill">
+                        <i class="fas fa-phone me-2"></i>Appeler
+                    </a>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="mt-4 p-3 bg-light rounded">
+                    <h6 class="fw-bold mb-2">
+                        <i class="fas fa-info-circle text-primary me-2"></i>
+                        Informations de Contact
+                    </h6>
+                    <p class="mb-1">
+                        <i class="fas fa-phone text-muted me-2"></i>
+                        <strong>Téléphone :</strong> +228 90 07 40 19
+                    </p>
+                    <p class="mb-0">
+                        <i class="fas fa-map-marker-alt text-muted me-2"></i>
+                        <strong>Adresse :</strong> Lomé, Togo
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Additional Info -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold mb-3">Pourquoi Choisir Cette Annale ?</h2>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <div class="bg-primary text-white rounded-circle p-3">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="fw-bold">Conforme au Programme</h5>
+                                <p class="text-muted mb-0">
+                                    Entièrement aligné sur le nouveau programme APC 2024
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <div class="bg-success text-white rounded-circle p-3">
+                                    <i class="fas fa-check-double"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="fw-bold">Corrigés Détaillés</h5>
+                                <p class="text-muted mb-0">
+                                    Solutions complètes avec explications étape par étape
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <div class="bg-warning text-white rounded-circle p-3">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="fw-bold">Qualité Supérieure</h5>
+                                <p class="text-muted mb-0">
+                                    Rédigé par des enseignants expérimentés et qualifiés
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="d-flex">
+                            <div class="flex-shrink-0">
+                                <div class="bg-info text-white rounded-circle p-3">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="fw-bold">Préparation Efficace</h5>
+                                <p class="text-muted mb-0">
+                                    Optimisé pour une préparation rapide et efficace
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Books -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold mb-3">Autres Annales Disponibles</h2>
+            <p class="text-muted">Complétez votre préparation avec nos autres matières</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for other_book_id, other_book in books.items() if other_book_id != book_id %}
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="row g-0">
+                        <div class="col-md-4">
+                            <img src="{{ url_for('serve_image', filename=other_book.image) }}" 
+                                 class="img-fluid h-100 object-fit-cover rounded-start" 
+                                 alt="{{ other_book.title }}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body h-100 d-flex flex-column">
+                                <h5 class="card-title">{{ other_book.title }}</h5>
+                                <p class="card-text text-muted">{{ other_book.subtitle }}</p>
+                                <p class="card-text"><small class="text-muted">{{ other_book.class }}</small></p>
+                                <div class="mt-auto">
+                                    <div class="price-tag mb-2">{{ other_book.price }}</div>
+                                    <a href="{{ url_for('book_detail', book_id=other_book_id) }}" 
+                                       class="btn btn-outline-primary btn-sm">
+                                        Voir Détails
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="fw-bold mb-2">Prêt à Commander ?</h3>
+                <p class="mb-0">
+                    Commandez maintenant et commencez votre préparation dès aujourd'hui !
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{{ url_for('order', book_id=book_id) }}" 
+                   class="btn btn-warning btn-lg">
+                    <i class="fas fa-shopping-cart me-2"></i>Commander
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

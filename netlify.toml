@@ -1,0 +1,8 @@
+[build]
+  command = "echo 'No build required for Flask app'"
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/api/index.py"
+  status = 200

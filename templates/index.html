@@ -1,0 +1,485 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Le Robinet des Intelligences{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Professional Hero Section */
+    .hero-futuristic {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+    
+    .hero-futuristic::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        animation: gridMove 20s linear infinite;
+    }
+    
+    @keyframes gridMove {
+        0% { transform: translate(0, 0); }
+        100% { transform: translate(10px, 10px); }
+    }
+    
+    .hero-content-futuristic {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        color: white;
+    }
+    
+    .hero-title-futuristic {
+        font-size: 4rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, #fff, #c9aa71, #fff);
+        background-size: 200% 200%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: gradientShift 3s ease-in-out infinite;
+        margin-bottom: 2rem;
+        text-shadow: 0 0 30px rgba(201, 170, 113, 0.3);
+    }
+    
+    @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+    }
+    
+    .hero-subtitle-futuristic {
+        font-size: 1.5rem;
+        margin-bottom: 3rem;
+        opacity: 0.9;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .btn-futuristic {
+        background: linear-gradient(45deg, #c9aa71, #b8860b);
+        border: none;
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 50px;
+        color: white;
+        text-decoration: none;
+        display: inline-block;
+        margin: 10px;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(201, 170, 113, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .btn-futuristic::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+    
+    .btn-futuristic:hover::before {
+        left: 100%;
+    }
+    
+    .btn-futuristic:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(201, 170, 113, 0.4);
+        color: white;
+    }
+    
+    .btn-futuristic-outline {
+        background: transparent;
+        border: 2px solid #c9aa71;
+        color: #c9aa71;
+        box-shadow: 0 10px 30px rgba(201, 170, 113, 0.2);
+    }
+    
+    .btn-futuristic-outline:hover {
+        background: #c9aa71;
+        color: white;
+    }
+    
+    /* Floating Elements */
+    .floating-elements {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 1;
+    }
+    
+    .floating-element {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: rgba(201, 170, 113, 0.2);
+        border-radius: 50%;
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .floating-element:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .floating-element:nth-child(2) { top: 60%; left: 20%; animation-delay: 1s; }
+    .floating-element:nth-child(3) { top: 40%; left: 80%; animation-delay: 2s; }
+    .floating-element:nth-child(4) { top: 80%; left: 70%; animation-delay: 3s; }
+    .floating-element:nth-child(5) { top: 30%; left: 60%; animation-delay: 4s; }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    /* Stats Section Futuristic */
+    .stats-futuristic {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+        padding: 80px 0;
+        position: relative;
+    }
+    
+    .stat-card-futuristic {
+        background: linear-gradient(135deg, #34495e, #2c3e50);
+        border: 1px solid #c9aa71;
+        border-radius: 20px;
+        padding: 40px 20px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stat-card-futuristic::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, transparent, rgba(201, 170, 113, 0.1), transparent);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .stat-card-futuristic:hover::before {
+        opacity: 1;
+    }
+    
+    .stat-card-futuristic:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(201, 170, 113, 0.3);
+    }
+    
+    .stat-number-futuristic {
+        font-size: 3rem;
+        font-weight: 800;
+        color: #c9aa71;
+        display: block;
+        margin-bottom: 10px;
+    }
+    
+    .stat-label-futuristic {
+        font-size: 1.1rem;
+        opacity: 0.8;
+    }
+    
+    /* Books Section */
+    .books-futuristic {
+        background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+        padding: 100px 0;
+    }
+    
+    .book-card-futuristic {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+    }
+    
+    .book-card-futuristic:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        border-color: #c9aa71;
+    }
+    
+    .section-title-futuristic {
+        font-size: 3rem;
+        font-weight: 800;
+        text-align: center;
+        margin-bottom: 60px;
+        background: linear-gradient(45deg, #2c3e50, #c9aa71, #2c3e50);
+        background-size: 200% 200%;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+        animation: gradientShift 4s ease-in-out infinite;
+    }
+    
+    /* Responsive Design - Mobile First */
+    @media (max-width: 576px) {
+        .hero-title-futuristic {
+            font-size: 2.2rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        .hero-subtitle-futuristic {
+            font-size: 1.1rem !important;
+            margin-bottom: 2rem !important;
+            padding: 0 15px;
+        }
+        
+        .btn-futuristic {
+            font-size: 1rem !important;
+            padding: 12px 25px !important;
+            margin: 8px 5px !important;
+            display: block !important;
+            width: calc(100% - 10px) !important;
+            text-align: center !important;
+        }
+        
+        .stats-futuristic {
+            padding: 60px 0 !important;
+        }
+        
+        .stat-card-futuristic {
+            padding: 25px 15px !important;
+            margin-bottom: 20px !important;
+        }
+        
+        .stat-number-futuristic {
+            font-size: 2.2rem !important;
+        }
+        
+        .section-title-futuristic {
+            font-size: 2rem !important;
+            margin-bottom: 40px !important;
+        }
+        
+        .books-futuristic {
+            padding: 60px 0 !important;
+        }
+        
+        .book-card-futuristic {
+            margin-bottom: 30px !important;
+        }
+        
+        .floating-element {
+            display: none !important;
+        }
+    }
+    
+    @media (min-width: 577px) and (max-width: 768px) {
+        .hero-title-futuristic {
+            font-size: 2.8rem !important;
+        }
+        
+        .hero-subtitle-futuristic {
+            font-size: 1.3rem !important;
+        }
+        
+        .btn-futuristic {
+            font-size: 1.1rem !important;
+            padding: 14px 30px !important;
+            margin: 8px !important;
+        }
+        
+        .section-title-futuristic {
+            font-size: 2.5rem !important;
+        }
+        
+        .stat-card-futuristic {
+            padding: 30px 20px !important;
+        }
+    }
+    
+    @media (min-width: 769px) and (max-width: 992px) {
+        .hero-title-futuristic {
+            font-size: 3.2rem !important;
+        }
+        
+        .btn-futuristic {
+            margin: 10px 8px !important;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .hero-futuristic {
+            min-height: 80vh !important;
+            padding: 100px 0 50px !important;
+        }
+        
+        .stats-futuristic .container .row {
+            justify-content: center !important;
+        }
+        
+        .books-futuristic .container .row.g-4 {
+            justify-content: center !important;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Futuristic Hero Section -->
+<section class="hero-futuristic">
+    <div class="floating-elements">
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+        <div class="floating-element"></div>
+    </div>
+    
+    <div class="container">
+        <div class="hero-content-futuristic">
+            <h1 class="hero-title-futuristic">
+                Le Robinet des Intelligences
+            </h1>
+            <p class="hero-subtitle-futuristic">
+                Excellez dans vos études avec nos annales de qualité supérieure<br>
+                Méthodologie éprouvée • Contenu premium • Résultats garantis
+            </p>
+            <div>
+                <a href="{{ url_for('catalogue') }}" class="btn-futuristic">
+                    <i class="fas fa-book me-2"></i>Explorer le Catalogue
+                </a>
+                <a href="tel:+22890074019" class="btn-futuristic btn-futuristic-outline">
+                    <i class="fas fa-phone me-2"></i>Contact Direct
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section Futuristic -->
+<section class="stats-futuristic">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card-futuristic">
+                    <span class="stat-number-futuristic">1000+</span>
+                    <div class="stat-label-futuristic">Étudiants Satisfaits</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card-futuristic">
+                    <span class="stat-number-futuristic">15</span>
+                    <div class="stat-label-futuristic">Épreuves par Matière</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card-futuristic">
+                    <span class="stat-number-futuristic">12</span>
+                    <div class="stat-label-futuristic">Matières Disponibles</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-card-futuristic">
+                    <span class="stat-number-futuristic">95%</span>
+                    <div class="stat-label-futuristic">Taux de Réussite</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Books Preview Futuristic -->
+<section class="books-futuristic">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-lg-10 mx-auto">
+                <h2 class="section-title-futuristic">Notre Collection Premium</h2>
+                <p class="lead" style="color: #555; font-size: 1.2rem;">
+                    Annales de qualité supérieure • Méthodologie éprouvée • Excellence académique
+                </p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            {% for book_id, book in books.items() %}
+            {% if loop.index <= 6 %}
+            <div class="col-lg-4 col-md-6">
+                <div class="book-card-futuristic h-100">
+                    <div class="position-relative">
+                        <img src="{{ url_for('serve_image', filename=book.image) }}" 
+                             class="card-img-top" alt="{{ book.title }}" style="height: 250px; object-fit: cover;">
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-primary" style="background: linear-gradient(45deg, #00d4ff, #0099cc) !important;">Nouveau Programme</span>
+                        </div>
+                        <div class="position-absolute bottom-0 start-0 m-3">
+                            <span class="badge bg-success" style="background: linear-gradient(45deg, #28a745, #20c997) !important; font-size: 1.1rem; padding: 8px 15px;">{{ book.price }}</span>
+                        </div>
+                    </div>
+                    <div class="card-body d-flex flex-column p-4">
+                        <div class="mb-2">
+                            <small class="text-primary fw-bold">{{ book.class }}</small>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">{{ book.title }}</h5>
+                        <p class="card-text text-muted mb-3">{{ book.subtitle }}</p>
+                        
+                        <div class="mt-auto">
+                            <div class="d-grid gap-2">
+                                <a href="{{ url_for('book_detail', book_id=book_id) }}" 
+                                   class="btn btn-outline-primary btn-lg">
+                                    <i class="fas fa-eye me-2"></i>Découvrir
+                                </a>
+                                <a href="{{ url_for('order', book_id=book_id) }}" 
+                                   class="btn-futuristic text-center" style="padding: 12px;">
+                                    <i class="fas fa-shopping-cart me-2"></i>Commander Maintenant
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{{ url_for('catalogue') }}" class="btn-futuristic" style="font-size: 1.3rem; padding: 20px 50px;">
+                <i class="fas fa-book-open me-2"></i>Explorer Tout le Catalogue
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section Professional -->
+<section style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 100px 0; position: relative; overflow: hidden;">
+    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 20% 20%, rgba(201,170,113,0.1) 2px, transparent 2px), radial-gradient(circle at 80% 80%, rgba(201,170,113,0.1) 2px, transparent 2px); background-size: 50px 50px; animation: float 10s ease-in-out infinite;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+        <div class="row align-items-center text-center text-lg-start">
+            <div class="col-lg-8">
+                <h3 style="font-size: 2.5rem; font-weight: 700; color: white; margin-bottom: 20px;">
+                    Excellence Académique Garantie
+                </h3>
+                <p style="font-size: 1.2rem; color: rgba(255,255,255,0.9); margin-bottom: 0;">
+                    Rejoignez des milliers d'étudiants qui ont transformé leurs résultats avec nos annales premium
+                </p>
+            </div>
+            <div class="col-lg-4 text-lg-end mt-4 mt-lg-0">
+                <a href="{{ url_for('contact') }}" class="btn-futuristic" style="font-size: 1.1rem; padding: 16px 32px;">
+                    <i class="fas fa-graduation-cap me-2"></i>Commencer Maintenant
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

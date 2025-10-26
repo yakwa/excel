@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Page Non Trouvée - Le Robinet des Intelligences{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mx-auto text-center">
+                <div class="py-5">
+                    <div class="mb-4">
+                        <i class="fas fa-search text-muted" style="font-size: 8rem; opacity: 0.3;"></i>
+                    </div>
+                    <h1 class="display-1 fw-bold text-primary">404</h1>
+                    <h2 class="fw-bold mb-3">Page Non Trouvée</h2>
+                    <p class="lead text-muted mb-4">
+                        Désolé, la page que vous recherchez n'existe pas ou a été déplacée.
+                    </p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-home me-2"></i>Retour à l'Accueil
+                        </a>
+                        <a href="{{ url_for('catalogue') }}" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-book me-2"></i>Voir le Catalogue
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
