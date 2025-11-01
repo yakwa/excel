@@ -13,57 +13,120 @@ app.config.from_object(config[config_name])
 # Configuration des dossiers
 UPLOAD_FOLDER = app.config['UPLOAD_FOLDER']
 
-# Données des livres (basées sur les images observées)
+# Données des livres - Ordre progressif : Primaire → Collège → Lycée
 BOOKS_DATA = {
-    'svt': {
-        'title': 'SVT - Sciences de la Vie et de la Terre',
-        'subtitle': '15 Épreuves pour tout le Programme',
-        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminale D',
-        'price': '2500 FCFA',
+    # PRIMAIRE - Toutes matières dans chaque annale
+    'cp1_cp2': {
+        'title': 'CP1 et CP2 - Toutes Matières',
+        'subtitle': 'SUJETS ET CORRIGÉS',
+        'description': '35 examens complets - Toutes les matières dans chaque annale',
+        'class': 'CP1 et CP2',
+        'price': 'Français uniquement',
         'image': 'IMG-20251026-WA0119.jpg',
         'features': [
-            '15 épreuves complètes',
-            'Corrigés détaillés',
-            'Nouveau programme 2024',
-            'Préparation APC 100%'
+            '35 examens complets',
+            'Toutes les matières incluses',
+            'Sujets et corrigés détaillés',
+            'Nouveau programme 2024'
         ]
     },
-    'maths': {
-        'title': 'MATHS - Mathématiques',
-        'subtitle': '15 Épreuves pour tout le Programme',
-        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminale D',
-        'price': '3000 FCFA',
+    'ce1_cm1': {
+        'title': 'CE1 au CM1 - Toutes Matières',
+        'subtitle': 'SUJETS ET CORRIGÉS',
+        'description': '30 examens complets - Toutes les matières dans chaque annale',
+        'class': 'CE1 au CM1',
+        'price': 'Français uniquement',
         'image': 'IMG-20251026-WA0120.jpg',
         'features': [
-            '15 épreuves complètes',
-            'Corrigés détaillés',
-            'Formules essentielles',
-            'Méthodes de résolution'
+            '30 examens complets',
+            'Toutes les matières incluses',
+            'Sujets et corrigés détaillés',
+            'Progression adaptée'
         ]
     },
-    'philosophie': {
-        'title': 'PHILOSOPHIE',
-        'subtitle': '15 Épreuves pour tout le Programme',
-        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminales A,C,D',
-        'price': '2500 FCFA',
+    'cm2': {
+        'title': 'CM2 - Toutes Matières',
+        'subtitle': 'SUJETS ET CORRIGÉS',
+        'description': '45 examens complets - Toutes les matières dans chaque annale',
+        'class': 'CM2',
+        'price': '2000 FCFA',
         'image': 'IMG-20251026-WA0121.jpg',
         'features': [
-            '15 épreuves complètes',
-            'Dissertations corrigées',
-            'Méthodes philosophiques',
-            'Auteurs au programme'
+            '45 examens complets',
+            'Toutes les matières incluses',
+            'Sujets et corrigés détaillés',
+            'Préparation au collège'
         ]
     },
-    'francais': {
+    
+    # COLLÈGE - Toutes matières dans chaque annale
+    '6e_4e': {
+        'title': '6e en 4e - Toutes Matières',
+        'subtitle': 'SUJETS ET CORRIGÉS',
+        'description': '12 examens complets - Toutes les matières dans chaque annale',
+        'class': '6e en 4e',
+        'price': '2500 FCFA',
+        'image': 'IMG-20251026-WA0122.jpg',
+        'features': [
+            '12 examens complets',
+            'Toutes les matières incluses',
+            'Sujets et corrigés détaillés',
+            'Méthodologie collège'
+        ]
+    },
+    '3e': {
+        'title': '3e - Toutes Matières',
+        'subtitle': 'SUJETS ET CORRIGÉS',
+        'description': '15 examens complets - Toutes les matières dans chaque annale',
+        'class': '3e',
+        'price': '3000 FCFA',
+        'image': 'IMG-20251026-WA0123.jpg',
+        'features': [
+            '15 examens complets',
+            'Toutes les matières incluses',
+            'Sujets et corrigés détaillés',
+            'Préparation BEPC'
+        ]
+    },
+    
+    # RENFORCEMENT DE COMPÉTENCES 4e et 3e
+    'renforcement_maths': {
+        'title': 'Renforcement de Compétences - MATHÉMATIQUES',
+        'subtitle': '30 Épreuves Spécialisées',
+        'description': 'Renforcement 4e et 3e - Mathématiques',
+        'class': '4e et 3e',
+        'price': '2500 FCFA',
+        'image': 'IMG-20251026-WA0124.jpg',
+        'features': [
+            '30 épreuves complètes',
+            'Renforcement ciblé',
+            'Méthodes de résolution',
+            'Préparation intensive'
+        ]
+    },
+    'renforcement_pct': {
+        'title': 'Renforcement de Compétences - PCT',
+        'subtitle': '30 Épreuves Spécialisées',
+        'description': 'Renforcement 4e et 3e - Physique Chimie Technologie',
+        'class': '4e et 3e',
+        'price': '2500 FCFA',
+        'image': 'IMG-20251026-WA0125.jpg',
+        'features': [
+            '30 épreuves complètes',
+            'Renforcement ciblé',
+            'Expériences pratiques',
+            'Préparation intensive'
+        ]
+    },
+    
+    # LYCÉE - 15 épreuves par matière (De Seconde en Terminale)
+    'francais_lycee': {
         'title': 'FRANÇAIS',
         'subtitle': '15 Épreuves pour tout le Programme',
         'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminales A,C,D',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
         'price': '2500 FCFA',
-        'image': 'IMG-20251026-WA0122.jpg',
+        'image': 'IMG-20251026-WA0126.jpg',
         'features': [
             '15 épreuves complètes',
             'Commentaires corrigés',
@@ -71,13 +134,13 @@ BOOKS_DATA = {
             'Œuvres au programme'
         ]
     },
-    'anglais': {
+    'anglais_lycee': {
         'title': 'ANGLAIS',
         'subtitle': '15 Épreuves pour tout le Programme',
         'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminales A,C,D',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
         'price': '2500 FCFA',
-        'image': 'IMG-20251026-WA0123.jpg',
+        'image': 'IMG-20251026-WA0127.jpg',
         'features': [
             '15 épreuves complètes',
             'Corrigés détaillés',
@@ -85,55 +148,13 @@ BOOKS_DATA = {
             'Expression écrite'
         ]
     },
-    'histoire_geo': {
-        'title': 'HISTOIRE-GÉOGRAPHIE',
-        'subtitle': '15 Épreuves pour tout le Programme',
-        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminales A,C,D',
-        'price': '2500 FCFA',
-        'image': 'IMG-20251026-WA0124.jpg',
-        'features': [
-            '15 épreuves complètes',
-            'Cartes et schémas',
-            'Chronologies détaillées',
-            'Méthodes de dissertation'
-        ]
-    },
-    'physique_chimie': {
-        'title': 'PHYSIQUE-CHIMIE',
-        'subtitle': '15 Épreuves pour tout le Programme',
-        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminale D',
-        'price': '3000 FCFA',
-        'image': 'IMG-20251026-WA0125.jpg',
-        'features': [
-            '15 épreuves complètes',
-            'Corrigés détaillés',
-            'Formules et constantes',
-            'Exercices pratiques'
-        ]
-    },
-    'espagnol': {
-        'title': 'ESPAGNOL',
-        'subtitle': '15 Épreuves pour tout le Programme',
-        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminales A,C,D',
-        'price': '2500 FCFA',
-        'image': 'IMG-20251026-WA0126.jpg',
-        'features': [
-            '15 épreuves complètes',
-            'Corrigés détaillés',
-            'Grammaire et conjugaison',
-            'Civilisation hispanique'
-        ]
-    },
-    'allemand': {
+    'allemand_lycee': {
         'title': 'ALLEMAND',
         'subtitle': '15 Épreuves pour tout le Programme',
         'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminales A,C,D',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
         'price': '2500 FCFA',
-        'image': 'IMG-20251026-WA0127.jpg',
+        'image': 'IMG-20251026-WA0128.jpg',
         'features': [
             '15 épreuves complètes',
             'Corrigés détaillés',
@@ -141,46 +162,116 @@ BOOKS_DATA = {
             'Culture germanique'
         ]
     },
-    'edhc': {
-        'title': 'EDHC - Éducation aux Droits de l\'Homme',
+    'philosophie_lycee': {
+        'title': 'PHILOSOPHIE',
         'subtitle': '15 Épreuves pour tout le Programme',
         'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminales A,C,D',
-        'price': '2000 FCFA',
-        'image': 'IMG-20251026-WA0128.jpg',
-        'features': [
-            '15 épreuves complètes',
-            'Corrigés détaillés',
-            'Droits et devoirs',
-            'Citoyenneté active'
-        ]
-    },
-    'eps': {
-        'title': 'EPS - Éducation Physique et Sportive',
-        'subtitle': '15 Épreuves pour tout le Programme',
-        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
-        'class': 'Terminales A,C,D',
-        'price': '2000 FCFA',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
+        'price': '2500 FCFA',
         'image': 'IMG-20251026-WA0129.jpg',
         'features': [
             '15 épreuves complètes',
-            'Théorie du sport',
-            'Anatomie et physiologie',
-            'Règlements sportifs'
+            'Dissertations corrigées',
+            'Méthodes philosophiques',
+            'Auteurs au programme'
         ]
     },
-    'maths_complementaires': {
-        'title': 'MATHS COMPLÉMENTAIRES',
-        'subtitle': '15 Épreuves Spécialisées',
-        'description': 'Sujets et Corrigés - Niveau avancé APC 2024',
-        'class': 'Terminale D',
-        'price': '3500 FCFA',
+    'histoire_geo_lycee': {
+        'title': 'HISTO-GÉO',
+        'subtitle': '15 Épreuves pour tout le Programme',
+        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
+        'price': '2500 FCFA',
         'image': 'IMG-20251026-WA0130.jpg',
         'features': [
-            '15 épreuves avancées',
-            'Corrigés très détaillés',
-            'Exercices complexes',
-            'Préparation concours'
+            '15 épreuves complètes',
+            'Cartes et schémas',
+            'Chronologies détaillées',
+            'Méthodes de dissertation'
+        ]
+    },
+    'ecm_lycee': {
+        'title': 'ECM',
+        'subtitle': '15 Épreuves pour tout le Programme',
+        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
+        'price': '2000 FCFA',
+        'image': 'IMG-20251026-WA0119.jpg',
+        'features': [
+            '15 épreuves complètes',
+            'Éducation civique et morale',
+            'Citoyenneté active',
+            'Valeurs républicaines'
+        ]
+    },
+    'sciences_lycee': {
+        'title': 'SCIENCES',
+        'subtitle': '15 Épreuves pour tout le Programme',
+        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
+        'price': '2500 FCFA',
+        'image': 'IMG-20251026-WA0120.jpg',
+        'features': [
+            '15 épreuves complètes',
+            'Sciences générales',
+            'Expériences pratiques',
+            'Méthode scientifique'
+        ]
+    },
+    'maths_lycee': {
+        'title': 'MATHÉMATIQUES',
+        'subtitle': '15 Épreuves pour tout le Programme',
+        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
+        'price': '3000 FCFA',
+        'image': 'IMG-20251026-WA0121.jpg',
+        'features': [
+            '15 épreuves complètes',
+            'Corrigés détaillés',
+            'Formules essentielles',
+            'Méthodes de résolution'
+        ]
+    },
+    'physique_lycee': {
+        'title': 'PHYSIQUE',
+        'subtitle': '15 Épreuves pour tout le Programme',
+        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
+        'price': '3000 FCFA',
+        'image': 'IMG-20251026-WA0122.jpg',
+        'features': [
+            '15 épreuves complètes',
+            'Corrigés détaillés',
+            'Formules et constantes',
+            'Exercices pratiques'
+        ]
+    },
+    'chimie_lycee': {
+        'title': 'CHIMIE',
+        'subtitle': '15 Épreuves pour tout le Programme',
+        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
+        'price': '3000 FCFA',
+        'image': 'IMG-20251026-WA0123.jpg',
+        'features': [
+            '15 épreuves complètes',
+            'Corrigés détaillés',
+            'Réactions chimiques',
+            'Travaux pratiques'
+        ]
+    },
+    'svt_lycee': {
+        'title': 'SVT',
+        'subtitle': '15 Épreuves pour tout le Programme',
+        'description': 'Sujets et Corrigés - Nouveau programme APC 2024',
+        'class': 'Seconde en Terminale LITTÉRAIRE',
+        'price': '2500 FCFA',
+        'image': 'IMG-20251026-WA0124.jpg',
+        'features': [
+            '15 épreuves complètes',
+            'Corrigés détaillés',
+            'Sciences de la vie',
+            'Sciences de la terre'
         ]
     }
 }
